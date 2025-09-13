@@ -3,6 +3,7 @@
 import customtkinter as ctk
 import matplotlib.pyplot as mtplt
 import sympy as sp
+from sympy import sin, cos, tan, exp, log
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 # VENTANA
@@ -20,13 +21,25 @@ def Calculate_Function(entry):
     # CÁLCULO DEL RECORRIDO DE LA FUNCIÓN
     funcion = entry.get()
     x = sp.Symbol("x")
-    f = sp.sympify(funcion)
+    try:
+        f = sp.sympify(funcion)
+    except sp.SympifyError:
+        lblerror.configure(text="Error: Función inválida")
+        app.after(3000, lambda: lblerror.configure(text=""))
+        return
+    
     selectDominio = [-3, -1, 0, 3, 6]  # Selección personal del dominio
     selectRecorrido = []  # Almacenamiento del recorrido
-    for entrada in selectDominio:
-        imagen = f.subs(x, entrada)  # Cálculo de cada elemento del recorrido
-        # (devuelve un objeto en lugar de un número)
-        selectRecorrido.append(float(imagen))
+    try:
+        for entrada in selectDominio:
+            imagen = f.subs(x, entrada)  # Cálculo de cada elemento del recorrido
+            # (devuelve un objeto en lugar de un número)
+            selectRecorrido.append(float(imagen))
+    except (TypeError, ValueError):
+        lblerror.configure(text="Error: Función inválida.")
+        app.after(3000, lambda: lblerror.configure(text=""))
+        return
+        
 
     # GRAFICACIÓN
     # Limpieza del frame de la gráfica (reinicio)
@@ -82,6 +95,8 @@ entVarX.grid(row=1, column=0)
 btnVarX = ctk.CTkButton(master=frInputs, text="Ingresar")
 btnVarX.grid(row=1, column=1)
 """
-
+# LABEL ERROR
+lblerror = ctk.CTkLabel(master=app, text="", text_color="red")
+lblerror.pack()
 
 app.mainloop()
