@@ -6,15 +6,17 @@ import sympy as sp
 from sympy import sin, cos, tan, exp, log
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
+# ----------------------------------------------------------------
 # VENTANA
+# ----------------------------------------------------------------
+
 app = ctk.CTk()
 app.geometry("1000x800")
 
-# ----------------------------------------------------------------
-# FRAMES
-# ----------------------------------------------------------------
 
+# ----------------------------------------------------------------
 # FUNCIONES
+# ----------------------------------------------------------------
 
 
 def Calculate_Function(entry):
@@ -27,19 +29,19 @@ def Calculate_Function(entry):
         lblerror.configure(text="Error: Función inválida")
         app.after(3000, lambda: lblerror.configure(text=""))
         return
-    
+
     selectDominio = [-3, -1, 0, 3, 6]  # Selección personal del dominio
     selectRecorrido = []  # Almacenamiento del recorrido
     try:
         for entrada in selectDominio:
-            imagen = f.subs(x, entrada)  # Cálculo de cada elemento del recorrido
+            # Cálculo de cada elemento del recorrido
+            imagen = f.subs(x, entrada)
             # (devuelve un objeto en lugar de un número)
             selectRecorrido.append(float(imagen))
     except (TypeError, ValueError):
         lblerror.configure(text="Error: Función inválida.")
         app.after(3000, lambda: lblerror.configure(text=""))
         return
-        
 
     # GRAFICACIÓN
     # Limpieza del frame de la gráfica (reinicio)
@@ -65,6 +67,10 @@ def Calculate_Function(entry):
     # Inserción de texto
     for x, y in zip(selectDominio, selectRecorrido):
         ax.text(x, y, f"({x}, {y})", fontsize=6, ha="left", va="bottom")
+
+# ----------------------------------------------------------------
+# FRAMES
+# ----------------------------------------------------------------
 
 
 # FRAME TÍTULO
