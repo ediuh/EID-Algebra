@@ -8,7 +8,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 # VENTANA
 app = ctk.CTk()
-app.geometry("1200x600")
+app.geometry("1000x800")
 
 # ----------------------------------------------------------------
 # FRAMES
@@ -86,7 +86,7 @@ btnFuncion = ctk.CTkButton(
 btnFuncion.grid(row=0, column=1)
 
 # FRAME GRÁFICA
-frGrafica = ctk.CTkFrame(master=app)
+frGrafica = ctk.CTkFrame(master=app, width=600, height=400)
 frGrafica.pack()
 """
 #entVarX = ctk.CTkEntry(
